@@ -16,4 +16,10 @@ class Settings:
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (255,0,0)   # color rojo en este caso: RGB
-        self.bullets_allowed = 10
+        self.bullets_allowed = 20
+
+        # Configuracion del alien
+        self.alien_speed = 1.0
+        self.fleet_drop_speed = 10
+        # fleet_direction de 1 representa derercha; -1 representa izquierda
+        self.fleet_direction = 1

@@ -38,6 +38,7 @@ class AlienInvasion:
             self.ship.update()
             self.bullets.update()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
     
     def _check_events(self):
@@ -95,6 +96,17 @@ class AlienInvasion:
                 self.bullets.remove(bullet)
         print(len(self.bullets))
 
+        self._check_bullet_alien_collisions()        
+    
+    def _check_bullet_alien_collisions(self):
+        # Responde a las colisiones bala-alien
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
+        if not self.aliens:
+            # Destruye las balas existentes y crea una flota nueva
+            self.bullets.empty()
+            self._create_fleet()
+
     def _create_fleet(self):
         """Crea una flota de aliens"""
         # Crea un alien y halla el numero de aliens en una fila
@@ -124,6 +136,27 @@ class AlienInvasion:
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
+
+    def _update_aliens(self):
+        """
+        Check if the fleet is at an edge,
+          then update the positions of all aliens in the fleet.
+        """
+        self._check_fleet_edges()
+        self.aliens.update()
+
+    def _change_fleet_direction(self):
+        """Baja toda la flota y cambia su direccion"""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
+
+    def _check_fleet_edges(self):
+        """Responde adecuadamente si algún alien ha llegado a un borde"""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
 
     def _create_stars(self):
         """Create a sky full of stars."""
