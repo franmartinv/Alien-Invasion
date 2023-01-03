@@ -7,10 +7,10 @@ class Star(Sprite):
         self.screen = ai_game.screen
 
         # Carga la imagen de la estrella y configura su atributo rect
-        self.image = pygame.image.load("images/star.png")
+        self.image = pygame.image.load("images/star-redimensioned.png")
         self.rect = self.image.get_rect()
 
-        # Inicia un nuevo alien cerca de la parte superior izquierda de la pantalla
+        # Inicia una nueva estrella cerca de la parte superior izquierda de la pantalla
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 
